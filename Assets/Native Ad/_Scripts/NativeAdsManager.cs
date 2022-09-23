@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-enum Order { _NativeAdsManager, AfterNativeAdManager };
+enum Order { _NativeAdsManager, AfterNativeAdManager }; 
 
 [DefaultExecutionOrder((int)Order._NativeAdsManager)]
 public class NativeAdsManager : MonoBehaviour
