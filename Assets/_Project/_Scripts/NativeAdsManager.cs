@@ -5,49 +5,37 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections;
 
-enum Order { BeforeNativeAdManager, _NativeAdsManager};
+enum Order { _NativeAdsManager, AfterNativeAdManager };
 
 [DefaultExecutionOrder((int)Order._NativeAdsManager)]
 public class NativeAdsManager : MonoBehaviour
 {
     public static NativeAdsManager Instance;
-    public static event Action NativeAdLoaded;
-    public bool showTestAd = false;             // For test, if enabled in inspector, only then test ad will show. Remove in real use
-    private bool nativeAdLoaded = false;
+    public static event Action<bool> NativeAdLoaded;
+    [SerializeField] private bool nativeAdLoaded = false;
     [HideInInspector] public bool isShow;
     private NativeAdPanel adPanel;
     private NoAdPanel noAdPanel;
     [SerializeField] Texture dummyMainImage;    // Assign ad image here to test if main image resizes, remove in real usage
 
-    private void Awake()
-    {
-        Instance = this;
-        // Get panels from Panels Manager so that we toggle on/off them at our will
-        // NativeAdsPanelManager have to load first, then should load NativeAdsManager
-        Tuple<NativeAdPanel, NoAdPanel> panels = NativeAdPanelsManager.Instance.GetPanels();
-        adPanel = panels.Item1;
-        noAdPanel = panels.Item2; 
-    }
+    private void Awake() => Instance = this;
 
-    IEnumerator Start()
+    public void ShowAd(NativeAdPanel adPanel, NoAdPanel noAdPanel)
     {
-        // Mimicking as if ad is loaded after 1 seconds, will show
-        yield return new WaitForSeconds(1f);
-        if (showTestAd)
+        // If native ad not loaded, show no ad panel
+        if (!nativeAdLoaded) noAdPanel.Show(true);
+        // If native ad is loaded, assign panels to proceed with parameters assignments to load/show an ad
+        if (nativeAdLoaded)
         {
-            nativeAdLoaded = true;
-            ShowAd();
+            this.adPanel = adPanel;
+            this.noAdPanel = noAdPanel;
+            isShow = true;
+            adPanel.mainImage.texture = dummyMainImage ? dummyMainImage : null; // To test if main image resizes, remove in real usage
         }
-        else noAdPanel.Show(true);
-    }
-
-    private void ShowAd()
-    {
-        if (!nativeAdLoaded) return;
-        NativeAdPanelsManager.Instance.ShowAdAvailablePanel(nativeAdLoaded);
-        isShow = true;
-        adPanel.mainImage.texture = dummyMainImage ? dummyMainImage : null; // To test if main image resizes, remove in real usage
-        NativeAdLoaded?.Invoke();                   // Place this call when the ad is loaded so that main image resizes
+        // NativeAdLoaded is true or false, it will invoke the event to let all listeners know about it
+        // PanelsManager listen this call to toggle on/off relevant panels
+        // NativeAdPanel listens it to see if the ad is loaded successfully, it resizes the main image
+        NativeAdLoaded?.Invoke(nativeAdLoaded);  
     }
 
 

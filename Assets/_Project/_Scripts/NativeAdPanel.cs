@@ -37,8 +37,9 @@ public class NativeAdPanel : MonoBehaviour
     private void OnEnable() => NativeAdsManager.NativeAdLoaded += OnNativeAdLoaded;
     private void OnDisable() => NativeAdsManager.NativeAdLoaded += OnNativeAdLoaded;
 
-    private void OnNativeAdLoaded()
+    private void OnNativeAdLoaded(bool nativeAdLoaded)
     {
+        if (!nativeAdLoaded) return;
         mainImage.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
         mainImage.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
         mainImage.rectTransform.pivot = new Vector2(0.5f, 0.5f);

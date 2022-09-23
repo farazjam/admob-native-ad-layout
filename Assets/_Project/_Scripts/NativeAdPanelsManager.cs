@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 // Old Name: ShowNativeAd
-[DefaultExecutionOrder((int)Order.BeforeNativeAdManager)]
+[DefaultExecutionOrder((int)Order.AfterNativeAdManager)]
 public class NativeAdPanelsManager : MonoBehaviour
 {
     public static NativeAdPanelsManager Instance;
@@ -17,22 +17,28 @@ public class NativeAdPanelsManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        Assert.IsNotNull(noAdPanel);
         Assert.IsNotNull(adPanel);
+        Assert.IsNotNull(noAdPanel);
         adPanel.Init();
     }
 
-    public Tuple<NativeAdPanel, NoAdPanel> GetPanels() { return Tuple.Create(adPanel, noAdPanel);}
-
-    public void ShowAdAvailablePanel(bool value)
+    private void OnEnable()
     {
-        adPanel.Show(value);
-        noAdPanel.Show(!value);
+        NativeAdsManager.NativeAdLoaded += OnNativeAdLoaded;
+        Assert.IsNotNull(NativeAdsManager.Instance);            // NativeAdManager must be present in hierarchy before this call
+        NativeAdsManager.Instance.ShowAd(adPanel, noAdPanel);
     }
 
     private void OnDisable()
     {
+        NativeAdsManager.NativeAdLoaded += OnNativeAdLoaded;
         //NativeAdsManager.Instance.isShow = false;
         //NativeAdsManager.Instance.RequestNativeAd();
+    }
+
+    public void OnNativeAdLoaded(bool nativeAdLoaded)
+    {
+        adPanel.Show(nativeAdLoaded);
+        noAdPanel.Show(!nativeAdLoaded);
     }
 }
