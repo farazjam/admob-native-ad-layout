@@ -8,16 +8,14 @@ using TMPro;
 public class NoAdPanel : MonoBehaviour
 {
     public GameObject contentPanel;
-    public void Awake()
+    public void Init()
     {
         Assert.IsNotNull(contentPanel);
         Show(false);
     }
 
-    private void OnEnable() => NativeAdsManager.NativeAdLoaded += OnNativeAdLoaded;
-    private void OnDisable() => NativeAdsManager.NativeAdLoaded -= OnNativeAdLoaded;
+    private void OnEnable() => NativeAdsManager.NativeAdLoaded += delegate (bool value) { Show(!value); };
+    private void OnDisable() => NativeAdsManager.NativeAdLoaded -= delegate (bool value) { Show(!value); };
 
-    private void OnNativeAdLoaded(bool nativeAdLoaded) => Show(!nativeAdLoaded);
-
-    public void Show(bool value) => contentPanel.SetActive(value);
+    public void Show(bool value) => contentPanel.gameObject.SetActive(value);
 }

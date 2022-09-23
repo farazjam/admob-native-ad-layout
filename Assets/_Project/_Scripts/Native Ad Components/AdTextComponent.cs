@@ -6,8 +6,13 @@ using UnityEngine.UI;
 using UnityEngine.Assertions;
 using TMPro;
 
+/// <summary>
+/// Use it only for dynamic ad texts
+/// </summary>
 [Serializable]
 [DefaultExecutionOrder((int)Order.AfterNativeAdManager)]
+[RequireComponent(typeof(TextMeshProUGUI))]
+[RequireComponent(typeof(BoxCollider))]
 public class AdTextComponent : MonoBehaviour
 {
     private TextMeshProUGUI text;

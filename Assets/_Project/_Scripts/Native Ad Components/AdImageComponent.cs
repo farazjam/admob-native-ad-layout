@@ -4,26 +4,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
-using TMPro;
 
+/// <summary>
+/// Use it only for dynamic ad images
+/// </summary>
 [Serializable]
 [DefaultExecutionOrder((int)Order.AfterNativeAdManager)]
+[RequireComponent(typeof(RawImage))]
+[RequireComponent(typeof(BoxCollider))]
 public class AdImageComponent : MonoBehaviour
 {
-    private RawImage image;
+    private RawImage rawImage;
     private BoxCollider collider;
 
-    public RawImage Image 
+    public Texture Texture 
     {
-        get { return this.image; }
-        set { this.image = value; }
+        get { return this.rawImage.texture; } 
+        set
+        {
+            if (this.rawImage.texture == value) return;
+            this.rawImage.texture = value;
+        }
     }
 
     public void Init()
     {
-        image = GetComponent<RawImage>();
+        rawImage = GetComponent<RawImage>();
+        Assert.IsNotNull(rawImage);
         collider = GetComponent<BoxCollider>();
-        Assert.IsNotNull(image);
         Assert.IsNotNull(collider);
     }
 
@@ -34,16 +42,16 @@ public class AdImageComponent : MonoBehaviour
     IEnumerator ResizeImageAndCollider()
     {
         yield return new WaitForEndOfFrame();
-        image.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
-        image.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-        image.rectTransform.pivot = new Vector2(0.5f, 0.5f);
-        image.rectTransform.sizeDelta = Vector2.zero;
-        if (!image.texture) yield return null;
-        image.SetNativeSize();
-        float scale = transform.parent.GetComponent<RectTransform>().sizeDelta.y / image.texture.height;
-        image.rectTransform.localScale = Vector3.one;
-        image.rectTransform.localScale *= scale;
-        collider.size = image.rectTransform.sizeDelta;
+        rawImage.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+        rawImage.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        rawImage.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+        rawImage.rectTransform.sizeDelta = Vector2.zero;
+        if (!rawImage.texture) yield return null;
+        rawImage.SetNativeSize();
+        float scale = transform.parent.GetComponent<RectTransform>().sizeDelta.y / rawImage.texture.height;
+        rawImage.rectTransform.localScale = Vector3.one;
+        rawImage.rectTransform.localScale *= scale;
+        collider.size = rawImage.rectTransform.sizeDelta;
     }
 
 }

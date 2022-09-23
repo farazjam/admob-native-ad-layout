@@ -16,6 +16,8 @@ public class NativeAdsManager : MonoBehaviour
     [HideInInspector] public bool isShow;
     private NativeAdPanel adPanel;
     private NoAdPanel noAdPanel;
+
+    [Header("Dummy Ad Params")]
     [SerializeField] Texture dummyMainImage;    // Assign ad image here to test if main image resizes, remove in real usage
 
     private void Awake() => Instance = this;
@@ -30,7 +32,7 @@ public class NativeAdsManager : MonoBehaviour
             this.adPanel = adPanel;
             this.noAdPanel = noAdPanel;
             isShow = true;
-            adPanel.mainImage.texture = dummyMainImage ? dummyMainImage : null; // To test if main image resizes, remove in real usage
+            adPanel.mainImage.Texture = dummyMainImage; // To test if main image resizes, remove in real usage
         }
         // NativeAdLoaded is true or false, it will invoke the event to let all listeners know about it
         // PanelsManager listen this call to toggle on/off relevant panels
@@ -41,7 +43,6 @@ public class NativeAdsManager : MonoBehaviour
 
     private void Update()
     {
-        //return; // For testing, remove it for real usage...
         if (this.nativeAdLoaded && isShow)
         {
             this.nativeAdLoaded = false;
@@ -103,7 +104,7 @@ public class NativeAdsManager : MonoBehaviour
             {
                 //List<Texture2D> imageList = this.nativeAd.GetImageTextures();
                 //mainAdImage.texture = imageList[0];                   // Old
-                adPanel.mainImage.texture = null;/*imageList[0];*/      // New
+                adPanel.mainImage.Texture = dummyMainImage;/*imageList[0];*/      // New
 
                 //List<GameObject> regList = new List<GameObject>();
                 //regList.Add(mainAdImage.gameObject);                  // Old

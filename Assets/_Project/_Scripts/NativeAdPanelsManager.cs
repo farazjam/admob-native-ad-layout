@@ -18,6 +18,7 @@ public class NativeAdPanelsManager : MonoBehaviour
         Assert.IsNotNull(adPanel);
         Assert.IsNotNull(noAdPanel);
         adPanel.Init();
+        noAdPanel.Init();
     }
 
     private void OnEnable()
