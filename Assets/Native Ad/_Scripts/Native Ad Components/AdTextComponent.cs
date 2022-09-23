@@ -17,7 +17,7 @@ public class AdTextComponent : MonoBehaviour
     public enum AdTextType { None, Headline = 25, Body = 90, CallToAction = 15}
     [SerializeField] private AdTextType type;
     private Text text;
-    private BoxCollider collider;
+    private BoxCollider collider; 
 
     public string Text 
     {
