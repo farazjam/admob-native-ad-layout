@@ -90,7 +90,7 @@ public class NativeAdsManager : MonoBehaviour
             if (bodyText != null)
             {
                 //this.bodyText.text = bodyText;                        // Old
-                adPanel.descriptionText.text = bodyText;                // New
+                //adPanel.descriptionText.text = bodyText;                // New
 
                 /*if (!this.nativeAd.RegisterBodyTextGameObject(this.bodyText.gameObject))
                 {
@@ -115,7 +115,7 @@ public class NativeAdsManager : MonoBehaviour
             if (buttonText != null)
             {
                 //this.callToActionText.text = buttonText;              // Old
-                adPanel.callToActionText.text = buttonText;             // New
+                //adPanel.callToActionText.text = buttonText;             // New
 
                 /*if (!this.nativeAd.RegisterCallToActionGameObject(this.callToActionText.gameObject))
                 {

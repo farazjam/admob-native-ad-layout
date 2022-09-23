@@ -13,10 +13,10 @@ public class NativeAdPanel : MonoBehaviour
     public RawImage adChoiceIcon;
     public RawImage appIcon;
     public AdTextComponent title;
-    public TextMeshProUGUI descriptionText;
+    public AdTextComponent description;
     public LayoutElement layoutElement;         // To ignore it for dynamic resizing of main image
     public RawImage mainImage;
-    public TextMeshProUGUI callToActionText;
+    public AdTextComponent callToAction;
 
     private BoxCollider boxCollider;
     const float containerHeight = 240;          // Fixed
@@ -31,12 +31,14 @@ public class NativeAdPanel : MonoBehaviour
         Assert.IsNotNull(adChoiceIcon);
         Assert.IsNotNull(appIcon);
         Assert.IsNotNull(title);
-        Assert.IsNotNull(descriptionText);
+        Assert.IsNotNull(description);
         Assert.IsNotNull(layoutElement);
         Assert.IsNotNull(mainImage);
-        Assert.IsNotNull(callToActionText);
+        Assert.IsNotNull(callToAction);
 
         title.Init();
+        description.Init();
+        callToAction.Init();
 
         layoutElement.ignoreLayout = true;
         boxCollider = mainImage.GetComponent<BoxCollider>();
