@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +6,13 @@ using UnityEngine.UI;
 using UnityEngine.Assertions;
 using TMPro;
 
+
 public class NativeAdPanel : MonoBehaviour
 {
     public GameObject contentPanel;
     public RawImage adChoiceIcon;
     public RawImage appIcon;
-    public TextMeshProUGUI titleText;
+    public AdTextComponent title;
     public TextMeshProUGUI descriptionText;
     public LayoutElement layoutElement;         // To ignore it for dynamic resizing of main image
     public RawImage mainImage;
@@ -28,11 +30,14 @@ public class NativeAdPanel : MonoBehaviour
         Show(false);
         Assert.IsNotNull(adChoiceIcon);
         Assert.IsNotNull(appIcon);
-        Assert.IsNotNull(titleText);
+        Assert.IsNotNull(title);
         Assert.IsNotNull(descriptionText);
         Assert.IsNotNull(layoutElement);
         Assert.IsNotNull(mainImage);
         Assert.IsNotNull(callToActionText);
+
+        title.Init();
+
         layoutElement.ignoreLayout = true;
         boxCollider = mainImage.GetComponent<BoxCollider>();
         Assert.IsNotNull(boxCollider);
@@ -40,11 +45,7 @@ public class NativeAdPanel : MonoBehaviour
     }
 
     private void OnEnable() => NativeAdsManager.NativeAdLoaded += OnNativeAdLoaded;
-    private void OnDisable()
-    {
-        mainImage.rectTransform.localScale = Vector3.one;
-        NativeAdsManager.NativeAdLoaded += OnNativeAdLoaded;
-    }
+    private void OnDisable() => NativeAdsManager.NativeAdLoaded -= OnNativeAdLoaded;
 
     private void OnNativeAdLoaded(bool nativeAdLoaded)
     {
@@ -56,8 +57,11 @@ public class NativeAdPanel : MonoBehaviour
         if (!mainImage.texture) return;
         mainImage.SetNativeSize();
         float scale = containerHeight / mainImage.texture.height;
+        mainImage.rectTransform.localScale = Vector3.one;
         mainImage.rectTransform.localScale *= scale;
         boxCollider.size = mainImage.rectTransform.sizeDelta;
+        title.Text = "Hello this is faraz";
+        Show(true);
     }
 
     public void Show(bool value) => contentPanel.gameObject.SetActive(value);

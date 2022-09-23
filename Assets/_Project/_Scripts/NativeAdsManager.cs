@@ -77,7 +77,7 @@ public class NativeAdsManager : MonoBehaviour
             if (headline != null)
             {
                 //heading.text = headline;                              // Old
-                adPanel.titleText.text = headline;                      // New
+                //adPanel.titleText.text = headline;                      // New
 
                 /*if (!this.nativeAd.RegisterHeadlineTextGameObject(heading.gameObject))
                 {

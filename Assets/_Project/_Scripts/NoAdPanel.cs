@@ -14,5 +14,10 @@ public class NoAdPanel : MonoBehaviour
         Show(false);
     }
 
+    private void OnEnable() => NativeAdsManager.NativeAdLoaded += OnNativeAdLoaded;
+    private void OnDisable() => NativeAdsManager.NativeAdLoaded -= OnNativeAdLoaded;
+
+    private void OnNativeAdLoaded(bool nativeAdLoaded) => Show(!nativeAdLoaded);
+
     public void Show(bool value) => contentPanel.SetActive(value);
 }

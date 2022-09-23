@@ -22,21 +22,13 @@ public class NativeAdPanelsManager : MonoBehaviour
 
     private void OnEnable()
     {
-        NativeAdsManager.NativeAdLoaded += OnNativeAdLoaded;
         Assert.IsNotNull(NativeAdsManager.Instance);            // NativeAdManager must be present in hierarchy before this call
         NativeAdsManager.Instance.ShowAd(adPanel, noAdPanel);
     }
 
     private void OnDisable()
     {
-        NativeAdsManager.NativeAdLoaded += OnNativeAdLoaded;
         //NativeAdsManager.Instance.isShow = false;
         //NativeAdsManager.Instance.RequestNativeAd();
-    }
-
-    public void OnNativeAdLoaded(bool nativeAdLoaded)
-    {
-        adPanel.Show(nativeAdLoaded);
-        noAdPanel.Show(!nativeAdLoaded);
     }
 }
