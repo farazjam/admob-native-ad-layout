@@ -41,7 +41,7 @@ public class NativeAdsManager : MonoBehaviour
 
     private void Update()
     {
-        return; // For testing, remove it for real usage...
+        //return; // For testing, remove it for real usage...
         if (this.nativeAdLoaded && isShow)
         {
             this.nativeAdLoaded = false;
@@ -73,11 +73,11 @@ public class NativeAdsManager : MonoBehaviour
                 }*/
             }
 
-            string headline = null;// this.nativeAd.GetHeadlineText();
+            string headline = "This is a test headline";// this.nativeAd.GetHeadlineText();
             if (headline != null)
             {
                 //heading.text = headline;                              // Old
-                //adPanel.titleText.text = headline;                      // New
+                adPanel.title.Text = headline;                          // New
 
                 /*if (!this.nativeAd.RegisterHeadlineTextGameObject(heading.gameObject))
                 {
@@ -86,11 +86,11 @@ public class NativeAdsManager : MonoBehaviour
                 }*/
             }
 
-            string bodyText = null;// this.nativeAd.GetBodyText();
+            string bodyText = "This is a sample body text and it should be max 90 chars long. This one is also 90 ch long";// this.nativeAd.GetBodyText();
             if (bodyText != null)
             {
                 //this.bodyText.text = bodyText;                        // Old
-                //adPanel.descriptionText.text = bodyText;                // New
+                adPanel.description.Text = bodyText;                    // New
 
                 /*if (!this.nativeAd.RegisterBodyTextGameObject(this.bodyText.gameObject))
                 {
@@ -111,11 +111,11 @@ public class NativeAdsManager : MonoBehaviour
                 //this.nativeAd.RegisterImageGameObjects(regList);
             }
 
-            string buttonText = null;// this.nativeAd.GetCallToActionText();
+            string buttonText = "Install xyz";// this.nativeAd.GetCallToActionText();
             if (buttonText != null)
             {
                 //this.callToActionText.text = buttonText;              // Old
-                //adPanel.callToActionText.text = buttonText;             // New
+                adPanel.callToAction.Text = buttonText;                 // New
 
                 /*if (!this.nativeAd.RegisterCallToActionGameObject(this.callToActionText.gameObject))
                 {

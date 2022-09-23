@@ -16,7 +16,11 @@ public class AdTextComponent : MonoBehaviour
     public string Text 
     {
         get { return this.text.text; }
-        set { this.text.text = value; }
+        set 
+        {
+            if (this.text.text == value) return;
+            this.text.text = value; 
+        }
     }
 
     public void Init()

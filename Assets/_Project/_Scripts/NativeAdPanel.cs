@@ -62,7 +62,7 @@ public class NativeAdPanel : MonoBehaviour
         mainImage.rectTransform.localScale = Vector3.one;
         mainImage.rectTransform.localScale *= scale;
         boxCollider.size = mainImage.rectTransform.sizeDelta;
-        title.Text = "Hello this is faraz";
+        //title.Text = "Hello this is faraz";
         Show(true);
     }
 
