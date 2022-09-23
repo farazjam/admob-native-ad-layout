@@ -10,7 +10,8 @@ enum Order { _NativeAdsManager, AfterNativeAdManager };
 public class NativeAdsManager : MonoBehaviour
 {
     public static NativeAdsManager Instance;
-    public static event Action<bool> NativeAdLoaded;
+    public static event Action<bool> ToggleAdPanels;
+    public static event Action Enable_NativeAdPanel_AfterAssignments;
     [SerializeField] private bool nativeAdLoaded = false;
     [HideInInspector] public bool isShow;
     private NativeAdPanel adPanel;
@@ -23,11 +24,9 @@ public class NativeAdsManager : MonoBehaviour
     public void ShowAd(NativeAdPanel adPanel)
     {
         this.adPanel = adPanel;
-        nativeAdLoaded = true;  // Test
         isShow = true;
-        NativeAdLoaded?.Invoke(nativeAdLoaded);
+        ToggleAdPanels?.Invoke(nativeAdLoaded);
     }
-
 
     private void Update()
     {
@@ -113,7 +112,7 @@ public class NativeAdsManager : MonoBehaviour
                 }*/
             }
 
-            //NativeAdLoaded?.Invoke(nativeAdLoaded);
+            Enable_NativeAdPanel_AfterAssignments?.Invoke();
 
         }
     }

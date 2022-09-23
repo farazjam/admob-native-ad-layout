@@ -38,8 +38,8 @@ public class NativeAdPanel : MonoBehaviour
         layoutElement.ignoreLayout = true;
     }
 
-    private void OnEnable() => NativeAdsManager.NativeAdLoaded += delegate (bool value) { Show(value); };
-    private void OnDisable() => NativeAdsManager.NativeAdLoaded -= delegate (bool value) { Show(value); };
+    private void OnEnable() => NativeAdsManager.Enable_NativeAdPanel_AfterAssignments += delegate { Show(true); };
+    private void OnDisable() => NativeAdsManager.Enable_NativeAdPanel_AfterAssignments -= delegate { Show(true); };
 
     public void Show(bool value) => contentPanel.gameObject.SetActive(value);
 }
