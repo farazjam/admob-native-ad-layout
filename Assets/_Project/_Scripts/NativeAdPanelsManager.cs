@@ -11,25 +11,32 @@ using UnityEngine.UI;
 public class NativeAdPanelsManager : MonoBehaviour
 {
     public NativeAdPanel adPanel;
-    public NoAdPanel noAdPanel;
+    public GameObject noAdPanel;
 
     private void Awake()
     {
         Assert.IsNotNull(adPanel);
         Assert.IsNotNull(noAdPanel);
         adPanel.Init();
-        noAdPanel.Init();
     }
 
     private void OnEnable()
     {
+        NativeAdsManager.NativeAdLoaded += TogglePanels;
         Assert.IsNotNull(NativeAdsManager.Instance);            // NativeAdManager must be present in hierarchy before this call
-        NativeAdsManager.Instance.ShowAd(adPanel, noAdPanel);
+        NativeAdsManager.Instance.ShowAd(adPanel);
     }
 
     private void OnDisable()
     {
-        //NativeAdsManager.Instance.isShow = false;
-        //NativeAdsManager.Instance.RequestNativeAd();
+        NativeAdsManager.NativeAdLoaded -= TogglePanels;
+        NativeAdsManager.Instance.isShow = false;
+        NativeAdsManager.Instance.RequestNativeAd();
+    }
+
+    private void TogglePanels(bool isNativeLoaded)
+    {
+        adPanel.contentPanel.gameObject.SetActive(isNativeLoaded);
+        noAdPanel.gameObject.SetActive(!isNativeLoaded);
     }
 }

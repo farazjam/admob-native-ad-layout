@@ -15,29 +15,27 @@ public class NativeAdsManager : MonoBehaviour
     [SerializeField] private bool nativeAdLoaded = false;
     [HideInInspector] public bool isShow;
     private NativeAdPanel adPanel;
-    private NoAdPanel noAdPanel;
 
     [Header("Dummy Ad Params")]
     [SerializeField] Texture dummyMainImage;    // Assign ad image here to test if main image resizes, remove in real usage
 
     private void Awake() => Instance = this;
 
-    public void ShowAd(NativeAdPanel adPanel, NoAdPanel noAdPanel)
+    public void ShowAd(NativeAdPanel adPanel)
     {
         // If native ad not loaded, show no ad panel
-        if (!nativeAdLoaded) noAdPanel.Show(true);
         // If native ad is loaded, assign panels to proceed with parameters assignments to load/show an ad
-        if (nativeAdLoaded)
+        // if (nativeAdLoaded)
         {
+            
             this.adPanel = adPanel;
-            this.noAdPanel = noAdPanel;
             isShow = true;
-            adPanel.mainImage.Texture = dummyMainImage; // To test if main image resizes, remove in real usage
+            //adPanel.mainImage.Texture = dummyMainImage; // To test if main image resizes, remove in real usage
         }
         // NativeAdLoaded is true or false, it will invoke the event to let all listeners know about it
         // PanelsManager listen this call to toggle on/off relevant panels
         // NativeAdPanel listens it to see if the ad is loaded successfully, it resizes the main image
-        NativeAdLoaded?.Invoke(nativeAdLoaded);  
+        //NativeAdLoaded?.Invoke(nativeAdLoaded);
     }
 
 
@@ -124,6 +122,8 @@ public class NativeAdsManager : MonoBehaviour
                         print(":* Handle failure to register call to action text.");
                 }*/
             }
+
+            NativeAdLoaded?.Invoke(nativeAdLoaded);
 
         }
     }
