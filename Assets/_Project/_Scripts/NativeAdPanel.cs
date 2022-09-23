@@ -15,6 +15,8 @@ public class NativeAdPanel : MonoBehaviour
     public LayoutElement layoutElement;         // To ignore it for dynamic resizing of main image
     public RawImage mainImage;
     public TextMeshProUGUI callToActionText;
+
+    private BoxCollider boxCollider;
     const float containerHeight = 240;          // Fixed
 
     public void Awake() => Show(false);
@@ -32,10 +34,17 @@ public class NativeAdPanel : MonoBehaviour
         Assert.IsNotNull(mainImage);
         Assert.IsNotNull(callToActionText);
         layoutElement.ignoreLayout = true;
+        boxCollider = mainImage.GetComponent<BoxCollider>();
+        Assert.IsNotNull(boxCollider);
+
     }
 
     private void OnEnable() => NativeAdsManager.NativeAdLoaded += OnNativeAdLoaded;
-    private void OnDisable() => NativeAdsManager.NativeAdLoaded += OnNativeAdLoaded;
+    private void OnDisable()
+    {
+        mainImage.rectTransform.localScale = Vector3.one;
+        NativeAdsManager.NativeAdLoaded += OnNativeAdLoaded;
+    }
 
     private void OnNativeAdLoaded(bool nativeAdLoaded)
     {
@@ -48,7 +57,7 @@ public class NativeAdPanel : MonoBehaviour
         mainImage.SetNativeSize();
         float scale = containerHeight / mainImage.texture.height;
         mainImage.rectTransform.localScale *= scale;
-        mainImage.gameObject.AddComponent<BoxCollider>();
+        boxCollider.size = mainImage.rectTransform.sizeDelta;
     }
 
     public void Show(bool value) => contentPanel.gameObject.SetActive(value);
