@@ -10,13 +10,11 @@ using UnityEngine.UI;
 [DefaultExecutionOrder((int)Order.AfterNativeAdManager)]
 public class NativeAdPanelsManager : MonoBehaviour
 {
-    public static NativeAdPanelsManager Instance;
     public NativeAdPanel adPanel;
     public NoAdPanel noAdPanel;
 
     private void Awake()
     {
-        Instance = this;
         Assert.IsNotNull(adPanel);
         Assert.IsNotNull(noAdPanel);
         adPanel.Init();
