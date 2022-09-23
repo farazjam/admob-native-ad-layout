@@ -38,6 +38,7 @@ public class NativeAdsManager : MonoBehaviour
             nativeAdLoaded = true;
             ShowAd();
         }
+        else noAdPanel.Show(true);
     }
 
     private void ShowAd()
