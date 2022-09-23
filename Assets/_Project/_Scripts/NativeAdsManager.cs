@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -23,19 +22,10 @@ public class NativeAdsManager : MonoBehaviour
 
     public void ShowAd(NativeAdPanel adPanel)
     {
-        // If native ad not loaded, show no ad panel
-        // If native ad is loaded, assign panels to proceed with parameters assignments to load/show an ad
-        // if (nativeAdLoaded)
-        {
-            
-            this.adPanel = adPanel;
-            isShow = true;
-            //adPanel.mainImage.Texture = dummyMainImage; // To test if main image resizes, remove in real usage
-        }
-        // NativeAdLoaded is true or false, it will invoke the event to let all listeners know about it
-        // PanelsManager listen this call to toggle on/off relevant panels
-        // NativeAdPanel listens it to see if the ad is loaded successfully, it resizes the main image
-        //NativeAdLoaded?.Invoke(nativeAdLoaded);
+        this.adPanel = adPanel;
+        nativeAdLoaded = true;  // Test
+        isShow = true;
+        NativeAdLoaded?.Invoke(nativeAdLoaded);
     }
 
 
@@ -76,7 +66,7 @@ public class NativeAdsManager : MonoBehaviour
             if (headline != null)
             {
                 //heading.text = headline;                              // Old
-                adPanel.title.Text = headline;                          // New
+                adPanel.headline.Text = headline;                          // New
 
                 /*if (!this.nativeAd.RegisterHeadlineTextGameObject(heading.gameObject))
                 {
@@ -89,7 +79,7 @@ public class NativeAdsManager : MonoBehaviour
             if (bodyText != null)
             {
                 //this.bodyText.text = bodyText;                        // Old
-                adPanel.description.Text = bodyText;                    // New
+                adPanel.body.Text = bodyText;                    // New
 
                 /*if (!this.nativeAd.RegisterBodyTextGameObject(this.bodyText.gameObject))
                 {
@@ -123,7 +113,7 @@ public class NativeAdsManager : MonoBehaviour
                 }*/
             }
 
-            NativeAdLoaded?.Invoke(nativeAdLoaded);
+            //NativeAdLoaded?.Invoke(nativeAdLoaded);
 
         }
     }

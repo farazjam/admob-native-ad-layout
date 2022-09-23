@@ -4,15 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
-using TMPro;
 
 public class NativeAdPanel : MonoBehaviour
 {
     public GameObject contentPanel;
     public RawImage adChoiceIcon;
     public RawImage appIcon;
-    public AdTextComponent title;
-    public AdTextComponent description;
+    public AdTextComponent headline;
+    public AdTextComponent body;
     public LayoutElement layoutElement;         // To ignore it for dynamic resizing of main image
     public AdImageComponent mainImage;
     public AdTextComponent callToAction;
@@ -26,14 +25,14 @@ public class NativeAdPanel : MonoBehaviour
         Assert.IsNotNull(contentPanel);
         Assert.IsNotNull(adChoiceIcon);
         Assert.IsNotNull(appIcon);
-        Assert.IsNotNull(title);
-        Assert.IsNotNull(description);
+        Assert.IsNotNull(headline);
+        Assert.IsNotNull(body);
         Assert.IsNotNull(layoutElement);
         Assert.IsNotNull(mainImage);
         Assert.IsNotNull(callToAction);
 
-        title.Init();
-        description.Init();
+        headline.Init();
+        body.Init();
         callToAction.Init();
         mainImage.Init();
         layoutElement.ignoreLayout = true;

@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
-using TMPro;
 
 /// <summary>
 /// Use it only for dynamic ad texts
 /// </summary>
 [Serializable]
 [DefaultExecutionOrder((int)Order.AfterNativeAdManager)]
-[RequireComponent(typeof(TextMeshProUGUI))]
+[RequireComponent(typeof(Text))]
 [RequireComponent(typeof(BoxCollider))]
 public class AdTextComponent : MonoBehaviour
 {
-    private TextMeshProUGUI text;
+    public enum AdTextType { None, Headline = 25, Body = 90, CallToAction = 15}
+    [SerializeField] private AdTextType type;
+    private Text text;
     private BoxCollider collider;
 
     public string Text 
@@ -24,13 +25,14 @@ public class AdTextComponent : MonoBehaviour
         set 
         {
             if (this.text.text == value) return;
-            this.text.text = value; 
+            Assert.AreNotEqual(type, AdTextType.None);
+            this.text.text = value.Length > (int)type ? value.Substring(0, (int)type) : value;
         }
     }
 
     public void Init()
     {
-        text = GetComponent<TextMeshProUGUI>();
+        text = GetComponent<Text>();
         collider = GetComponent<BoxCollider>();
         Assert.IsNotNull(text);
         Assert.IsNotNull(collider);
